@@ -91,3 +91,7 @@ desktop.ini
 # /Assets/                -> teu conteúdo (scripts, cenas, sprites, etc)
 # /ProjectSettings/       -> configurações do projeto
 # /Packages/manifest.json -> lista de pacotes usados
+
+# --- PLASTIC SCM ---
+.plastic/
+
