@@ -87,13 +87,16 @@ public class ColisaoEspinho : MonoBehaviour
         yield return new WaitForSeconds(tempoMorte);
 
         // Teleporta o jogador para o ponto de respawn
-        player.transform.position = SpawnPoint.position;
+        if (SpawnPoint != null)
+        {
+            player.transform.position = SpawnPoint.position;
+        }
 
-        // Restaura a física do personagem para que ele possa se mover novamente
+        // Restaura a física do personagem com a gravidade padrão (1.8f em Personagem.cs)
         if (rbPersonagem != null)
         {
-            // A gravidade padrão no meu script de personagem é 3. Se eu mudar la, tenho que mudar aqui também.
-            rbPersonagem.gravityScale = 3f;
+            rbPersonagem.velocity = Vector2.zero;
+            rbPersonagem.gravityScale = 1.8f;
         }
 
         // Garante que o personagem olhe para a direita
@@ -107,6 +110,13 @@ public class ColisaoEspinho : MonoBehaviour
         if (animatorPersonagem != null)
         {
             animatorPersonagem.ResetTrigger("Dead");
+            animatorPersonagem.Play("Personagem_Idle");
+        }
+
+        // Reativa a movimentação do personagem após o respawn
+        if (movimentoScript != null)
+        {
+            movimentoScript.enabled = true;
         }
     }
 }

@@ -52,9 +52,12 @@ public class Personagem : MonoBehaviour
         rbPersonagem = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // Encontra o controlador do jogo e zera as moedas
+        // Encontra o controlador do jogo e zera as moedas com verificação segura
         controladorPersonagem = ControladorJogo.Controlador;
-        controladorPersonagem.Moedas = 0;
+        if (controladorPersonagem != null)
+        {
+            controladorPersonagem.Moedas = 0;
+        }
     }
 
     private void Update()
@@ -200,8 +203,14 @@ public class Personagem : MonoBehaviour
         if (collision.gameObject.CompareTag("Moedas"))
         {
             collision.gameObject.SetActive(false);
-            controladorPersonagem.Moedas++;
-            controladorPersonagem.TextoMoeda.text = controladorPersonagem.Moedas.ToString();
+            if (controladorPersonagem != null)
+            {
+                controladorPersonagem.Moedas++;
+                if (controladorPersonagem.TextoMoeda != null)
+                {
+                    controladorPersonagem.TextoMoeda.text = controladorPersonagem.Moedas.ToString();
+                }
+            }
         }
     }
 
